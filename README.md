@@ -178,3 +178,20 @@ Some ISA extensions are not supported, often because they are deprecated or unsu
 - (AMD) FMA4: unsupported by newer hardware.
 
 If you find any other issues, please report a bug. Or, even better, send a patch fixing the issue.
+
+
+## (unrelated to the original author of the project) for the purpose of the modification and Methods to use these added codes
+- Purpose of modification:
+	- Convert x86 machine code to `NASM`-usable sink code.
+- How to Use:
+	- On-Use API Definition (C++)
+```cpp
+extern "C" __declspec(dllimport) const char* WINAPI DecodeOpcode(const char* opcode, uint16_t size, uint32_t address);
+```
+	- Example of function usage
+```cpp
+const char* buffer = "\x56\x68\xB8\x65\x82\x00\xE8\xF2\x95\x29";
+std::string data = DecodeOpcode(buffer, 11, 0x52F723);
+```
+
+
