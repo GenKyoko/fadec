@@ -60,16 +60,6 @@ if get_option('with_decode')
   headers += files('fadec.h')
   sources += files('decode.c', 'format.c')
 endif
-if get_option('with_encode')
-  components += 'encode'
-  headers += files('fadec-enc.h')
-  sources += files('encode.c')
-endif
-if get_option('with_encode2')
-  components += 'encode2'
-  headers += files('fadec-enc2.h')
-  sources += files('encode2.c')
-endif
 
 generate_args = []
 if get_option('archmode') != 'only64'
@@ -101,6 +91,11 @@ libfadec = static_library('fadec', sources, tables, install: true)
 fadec = declare_dependency(link_with: libfadec,
                            include_directories: include_directories('.'),
                            sources: tables)
+
+ifadec_src = ['ifadec.cpp']
+ifadec = library('ifadec', ifadec_src, 
+                link_with: libfadec)
+
 install_headers(headers)
 
 foreach component : components
